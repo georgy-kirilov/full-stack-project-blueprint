@@ -19,7 +19,7 @@
     ssh-keygen -t rsa -f ~/.ssh/<UNIQUE_VM_KEY_NAME>
     ```
 
-3. **Display and Copy the Public SSH Key**:
+3. **Display and Copy the Entire Public SSH Key**:
     ```bash
     cat ~/.ssh/<UNIQUE_VM_KEY_NAME>.pub
     ```
