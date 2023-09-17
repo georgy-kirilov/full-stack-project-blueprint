@@ -36,7 +36,7 @@
 
 1. **Add SSH Key**: In the `Create a Linode` interface, click on "Add An SSH Key".
 2. **Paste Public Key**: Paste the content of the public key, enter an appropriate label name, and click "Add Key".
-3. **Click on "Create Linode".
+3. **Click on "Create Linode"**.
 
 ## VM Configuration (Post-Creation)
 
