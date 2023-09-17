@@ -14,20 +14,29 @@
 
 ### Local Machine Steps
 
-1. **Generate an SSH Key** - open a Linux terminal and execute the following command, specifying a unique file name:
+1. **Generate an SSH Key**\
+   Open a **Linux** terminal and execute the following command, specifying a **unique** file name:\
+   _For **Production** environments enter a **Strong Passphrase** and store it inside a **Password Manager**_
     ```
     ssh-keygen -t rsa -f ~/.ssh/<UNIQUE_VM_KEY_NAME>
     ```
     
-2. **Edit SSH Config** - add a new entry for the VM in `~/.ssh/config`.
+3. Add **new VM** settings inside **SSH Config**\
+    Edit the `~/.ssh/config` file:
+    ```
+    nano ~/.ssh/config
+    ```
+    Add a new entry for the VM in `~/.ssh/config`:   
     ```
     Host <VM_ALIAS>
         HostName <VM_IP_ADDRESS>
-        User <USERNAME>
+        User <VM_USERNAME>
         IdentityFile ~/.ssh/<UNIQUE_VM_KEY_NAME>
     ```
+    Press **Ctrl + O** to save\
+    Press **Ctrl + X** to exit
 
-3. Display and Copy the **Public SSH Key**: 
+5. Display and Copy the **Public SSH Key**: 
     ```
     cat ~/.ssh/<UNIQUE_VM_KEY_NAME>.pub
     ```
@@ -52,7 +61,7 @@
    ```
    sudo nano /etc/ssh/sshd_config
    ```
-    Set `PermitRootLogin` to `no`.
+    Set `PermitRootLogin` to `no`
 
 5. **Restart SSH Service**: 
     ```
