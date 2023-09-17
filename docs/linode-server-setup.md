@@ -53,6 +53,7 @@
     ```bash
     ssh root@<VM_IP_ADDRESS>
     ```
+    When prompted, enter `yes` and press "Enter"
 
 2. **Create Non-Root User**:
     ```bash
