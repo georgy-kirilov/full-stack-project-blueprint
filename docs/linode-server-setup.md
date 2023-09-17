@@ -2,32 +2,34 @@
 
 ## Initial Steps
 
-1. **Log into your Linode account**.
-2. **Go to "Linodes >> Create Linode"**.
-3. **Choose an appropriate Linux distribution**.
-4. **Select a Region which is close enough**.
-5. **Select a Linode Plan** - always start with the cheapest one called "Nanode".
-6. **Enter a label name for the virtual machine**.
-7. **Create a strong password** - at least 25 characters long.
+1. Log into your **Linode** account
+2. Navigate to **Linodes** and click on **Create Linode**
+3. Choose an appropriate **Linux** distribution
+4. Select a **Region** which is as close as possible
+5. Select the cheapest **Linode Plan** "Nanode"
+6. Enter a **Label** name for the virtual machine
+7. Create a **Strong Password** (at least **25** characters long) and store it inside a **Password Manager**
 
 ## SSH Configuration
 
 ### Local Machine Steps
 
-1. **Generate an SSH Key**: Open a terminal and execute the following command, specifying a unique file name.
-    ```bash
+1. **Generate an SSH Key** - open a Linux terminal and execute the following command, specifying a unique file name:
+    ```
     ssh-keygen -t rsa -f ~/.ssh/<UNIQUE_VM_KEY_NAME>
     ```
-2. **Display and Copy Public Key**: 
-    ```bash
-    cat ~/.ssh/<UNIQUE_VM_KEY_NAME>.pub
+    
+2. **Edit SSH Config** - add a new entry for the VM in `~/.ssh/config`.
     ```
-3. **Edit SSH Config**: Add a new entry for the VM in `~/.ssh/config`.
-    ```text
     Host <VM_ALIAS>
         HostName <VM_IP_ADDRESS>
         User <USERNAME>
         IdentityFile ~/.ssh/<UNIQUE_VM_KEY_NAME>
+    ```
+
+3. Display and Copy the **Public SSH Key**: 
+    ```
+    cat ~/.ssh/<UNIQUE_VM_KEY_NAME>.pub
     ```
 
 ### Linode Interface Steps
@@ -38,11 +40,11 @@
 ## VM Configuration (Post-Creation)
 
 1. **SSH as Root**: Initially connect as root.
-    ```bash
+    ```
     ssh root@<VM_IP_ADDRESS>
     ```
 2. **Create Non-Root User**: 
-    ```bash
+    ```
     sudo adduser <USERNAME>
     sudo usermod -aG sudo <USERNAME>
     ```
@@ -53,14 +55,14 @@
     Set `PermitRootLogin` to `no`.
 
 5. **Restart SSH Service**: 
-    ```bash
+    ```
     sudo systemctl restart sshd
     ```
 
 ## Test Connection
 
 1. **SSH into VM using the Non-Root User**: 
-    ```bash
+    ```
     ssh <VM_ALIAS>
     ```
 
