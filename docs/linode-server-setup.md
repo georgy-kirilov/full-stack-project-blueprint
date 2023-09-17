@@ -19,14 +19,6 @@
     ssh-keygen -t rsa -f ~/.ssh/<UNIQUE_VM_KEY_NAME>
     ```
 
-2. **Edit SSH Config**: Add a new entry for the VM in `~/.ssh/config`.
-    ```text
-    Host <VM_ALIAS>
-        HostName <VM_IP_ADDRESS>
-        User <USERNAME>
-        IdentityFile ~/.ssh/<UNIQUE_VM_KEY_NAME>
-    ```
-
 3. **Display and Copy the Public SSH Key**:
     ```bash
     cat ~/.ssh/<UNIQUE_VM_KEY_NAME>.pub
@@ -36,7 +28,17 @@
 
 1. **Add SSH Key**: In the `Create a Linode` interface, click on "Add An SSH Key".
 2. **Paste Public Key**: Paste the content of the public key, enter an appropriate label name, and click "Add Key".
-3. **Click on "Create Linode"**.
+3. **Click on** "Create Linode".
+
+### Post-Creation Local Machine Steps
+
+1. **Edit SSH Config**: Once you have the VM's IP, add a new entry in `~/.ssh/config`.
+    ```text
+    Host <VM_ALIAS>
+        HostName <VM_IP_ADDRESS>
+        User <USERNAME>
+        IdentityFile ~/.ssh/<UNIQUE_VM_KEY_NAME>
+    ```
 
 ## VM Configuration (Post-Creation)
 
