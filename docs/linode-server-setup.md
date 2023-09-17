@@ -1,78 +1,70 @@
-# Setup up the Linux Server on Linode
+# Set Up the Linux Server on Linode
 
 ## Initial Steps
 
-1. Log into your **Linode** account
-2. Navigate to **Linodes** and click on **Create Linode**
-3. Choose an appropriate **Linux** distribution
-4. Select a **Region** which is as close as possible
-5. Select the cheapest **Linode Plan** "Nanode"
-6. Enter a **Label** name for the virtual machine
-7. Create a **Strong Password** (at least **25** characters long) and store it inside a **Password Manager**
+1. **Log into your Linode account**
+2. **Navigate to Linodes** and click on `Create Linode`
+3. **Choose an appropriate Linux distribution**
+4. **Select a Region** that is as close as possible
+5. **Select the Linode Plan** - Choose the cheapest option, "Nanode"
+6. **Enter a Label Name** for the virtual machine
+7. **Create a Strong Password**: Make it at least 25 characters long and store it in a Password Manager
 
 ## SSH Configuration
 
 ### Local Machine Steps
 
-1. **Generate an SSH Key**\
-   Open a **Linux** terminal and execute the following command, specifying a **unique** file name:\
-   _For **Production** environments enter a **Strong Passphrase** and store it inside a **Password Manager**_
-    ```
+1. **Generate an SSH Key**: Open a Linux terminal and execute the following command, specifying a unique filename:
+    ```bash
     ssh-keygen -t rsa -f ~/.ssh/<UNIQUE_VM_KEY_NAME>
     ```
-    
-3. Add **new VM** settings inside **SSH Config**\
-    Edit the `~/.ssh/config` file:
-    ```
-    nano ~/.ssh/config
-    ```
-    Add a new entry for the VM in `~/.ssh/config`:   
-    ```
+
+2. **Edit SSH Config**: Add a new entry for the VM in `~/.ssh/config`.
+    ```text
     Host <VM_ALIAS>
         HostName <VM_IP_ADDRESS>
-        User <VM_USERNAME>
+        User <USERNAME>
         IdentityFile ~/.ssh/<UNIQUE_VM_KEY_NAME>
     ```
-    Press **Ctrl + O** to save\
-    Press **Ctrl + X** to exit
 
-5. Display and Copy the **Public SSH Key**: 
-    ```
+3. **Display and Copy the Public SSH Key**:
+    ```bash
     cat ~/.ssh/<UNIQUE_VM_KEY_NAME>.pub
     ```
 
 ### Linode Interface Steps
 
-1. **Add SSH Key**: In the "Create a Linode" interface, click on "Add An SSH Key".
-2. **Paste Public Key**: Paste the content of the public key, enter an appropriate Label Name, and click "Add Key".
+1. **Add SSH Key**: In the `Create a Linode` interface, click on "Add An SSH Key".
+2. **Paste Public Key**: Paste the content of the public key, enter an appropriate label name, and click "Add Key".
+3. **Click on "Create Linode".
 
 ## VM Configuration (Post-Creation)
 
-1. **SSH as Root**: Initially connect as root.
-    ```
+1. **SSH as Root**: Initially connect as root:
+    ```bash
     ssh root@<VM_IP_ADDRESS>
     ```
-2. **Create Non-Root User**: 
-    ```
+
+2. **Create Non-Root User**:
+    ```bash
     sudo adduser <USERNAME>
     sudo usermod -aG sudo <USERNAME>
     ```
-3. **Disable Root SSH Access**: 
-   ```
-   sudo nano /etc/ssh/sshd_config
-   ```
-    Set `PermitRootLogin` to `no`
 
-5. **Restart SSH Service**: 
+3. **Disable Root SSH Access**:
+    ```bash
+    sudo nano /etc/ssh/sshd_config
     ```
+    Set `PermitRootLogin` to `no`.
+
+4. **Restart SSH Service**:
+    ```bash
     sudo systemctl restart sshd
     ```
 
 ## Test Connection
 
-1. **SSH into VM using the Non-Root User**: 
-    ```
-    ssh <VM_ALIAS>
-    ```
+SSH into VM using the non-root user:
 
-By following these steps, you should now have a secure, SSH-enabled Linode VM.
+```bash
+ssh <VM_ALIAS>
