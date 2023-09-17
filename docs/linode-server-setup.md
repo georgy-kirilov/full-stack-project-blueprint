@@ -58,6 +58,13 @@
     ```
     **Save and exit (Ctrl + O, Enter, Ctrl + X)**
 
+ 3. **Handle Host Key Changes** (Optional but recommended)\
+    If you get a "REMOTE HOST IDENTIFICATION HAS CHANGED!" warning when trying to SSH into the VM, it means the SSH key for that IP address has changed (common when recreating VMs). To resolve this, run:
+    ```bash
+    ssh-keygen -f "/home/<LOCAL_USERNAME>/.ssh/known_hosts" -R "<VM_IP_ADDRESS>"
+    ```
+    Replace `<LOCAL_USERNAME>` with your local machine's username and `<VM_IP_ADDRESS>` with the IP address of the VM.
+
 ## VM Configuration (Post-Creation)
 
 1. **SSH as Root**: 
