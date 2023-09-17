@@ -56,6 +56,7 @@
         User <USERNAME>
         IdentityFile ~/.ssh/<VM_NAME>
     ```
+    **Save and exit (Ctrl + O, Enter, Ctrl + X)**
 
 ## VM Configuration (Post-Creation)
 
