@@ -3,7 +3,7 @@
 ## Initial Steps
 
 1. **Log into your Linode account**
-2. **Navigate to Linodes** and click on `Create Linode`
+2. **Navigate to Linodes** and click on "Create Linode"
 3. **Choose an appropriate Linux distribution**
 4. **Select a Region** that is as close as possible
 5. **Select the Linode Plan** - Choose the cheapest option, "Nanode"
@@ -19,26 +19,33 @@
     ssh-keygen -t rsa -f ~/.ssh/<UNIQUE_VM_KEY_NAME>
     ```
 
-3. **Display and Copy the Entire Public SSH Key**:
+2. **Display and Copy the Entire Public SSH Key**:
     ```bash
     cat ~/.ssh/<UNIQUE_VM_KEY_NAME>.pub
     ```
 
 ### Linode Interface Steps
 
-1. **Add SSH Key**: In the `Create a Linode` interface, click on "Add An SSH Key".
+1. **Add SSH Key**: In the "Create a Linode" interface, click on "Add An SSH Key".
 2. **Paste Public Key**: Paste the content of the public key, enter an appropriate label name, and click "Add Key".
 3. **Click on** "Create Linode".
 
 ### Post-Creation Local Machine Steps
 
-1. **Edit SSH Config**: Once you have the VM's IP, add a new entry in `~/.ssh/config`.
+1. **Get VM's IP Address**: Obtain this from the Linode interface.
+  
+2. **Edit SSH Config**: Open the config file in a text editor:
+    ```bash
+    nano ~/.ssh/config
+    ```
+    Add a new entry for the VM.
     ```text
     Host <VM_ALIAS>
         HostName <VM_IP_ADDRESS>
         User <USERNAME>
         IdentityFile ~/.ssh/<UNIQUE_VM_KEY_NAME>
     ```
+    Save the changes by pressing `Ctrl + O`, then `Enter`. Exit by pressing `Ctrl + X`.
 
 ## VM Configuration (Post-Creation)
 
