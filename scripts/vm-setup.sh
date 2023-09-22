@@ -161,15 +161,23 @@ read -p "8. Make Docker Compose executable:
 sudo chmod +x /usr/local/bin/docker-compose"
 echo
 
-read -p "9. Enable the UFW firewall:
+read -p "9. Install Firewall:
+sudo apt install ufw"
+echo
+
+read -p "10. Allow SSH connections through the Firewall:
+sudo ufw allow OpenSSH"
+echo
+
+read -p "11. Enable the Firewall:
 sudo ufw enable"
 echo
 
-read -p "10. Allow Docker ports on UFW:
+read -p "10. Allow Docker ports on the Firewall:
 sudo ufw allow 2375,2376/tcp"
 echo
 
-read -p "11. Reload UFW to apply changes:
+read -p "11. Reload Firewall to apply changes:
 sudo ufw reload"
 echo
 
@@ -181,5 +189,8 @@ read -p "13. Confirm Docker Compose installation:
 docker-compose --version"
 echo
 
-read -p "14. Display UFW firewall status:
+read -p "14. Display Firewall status:
 sudo ufw status"
+echo
+
+echo "Done..."
