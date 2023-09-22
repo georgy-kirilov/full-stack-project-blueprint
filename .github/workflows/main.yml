@@ -1,0 +1,28 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v5
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: SSH and Deploy
+      run: |
+        ssh -o "StrictHostKeyChecking=no" ${{ secrets.VM_USERNAME }}@${{ secrets.VM_IP_ADDRESS }} << 'ENDSSH'
+          cd /srv/full-stack-project-blueprint
+          git pull origin main
+          docker-compose -f /srv/full-stack-project-blueprint/src/backend/docker-compose.yml down
+          docker-compose -f /srv/full-stack-project-blueprint/src/backend/docker-compose.yml up -d --build
+        ENDSSH
