@@ -10,9 +10,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
   
-  frontend:
-    build:
-      context: ../src/frontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
+  #frontend:
+  #  build:
+  #    context: ../src/frontend
+  #    dockerfile: Dockerfile
+  #  ports:
+  #    - "3000:3000"
