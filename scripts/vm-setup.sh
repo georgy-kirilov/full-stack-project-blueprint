@@ -1,5 +1,5 @@
 echo
-echo "=== Linux VM Setup ==="
+echo "=== Create VM on Linode ==="
 echo
 
 read -p "1. Enter VM name: " VM_NAME
@@ -32,11 +32,11 @@ echo
 read -p "7. Open a new Linux terminal on your local machine..."
 echo
 
-read -p "8. Generate an SSH Key pair by running:
+read -p "8. Generate an SSH Key pair:
 ssh-keygen -t rsa -f ~/.ssh/$VM_NAME"
 echo
 
-read -p "9. Display the Public SSH Key by running:
+read -p "9. Display the Public SSH Key:
 cat ~/.ssh/$VM_NAME.pub"
 echo
 
@@ -145,7 +145,7 @@ read -p "4. Start the Docker service:
 sudo systemctl start docker"
 echo
 
-read -p "5. Add non-root user to Docker group:
+read -p "5. Add the non-root user to Docker group:
 sudo usermod -aG docker $USERNAME"
 echo
 
