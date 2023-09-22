@@ -1,18 +1,18 @@
-echo
+echo ""
 echo "=== Create VM on Linode ==="
-echo
+echo ""
 
 read -p "1. Enter VM name: " VM_NAME
-echo
+echo ""
 
 read -p "2. Enter VM non-root user name: " USERNAME
-echo
+echo ""
 
 echo "=== Create a new Linode VM ==="
-echo
+echo ""
 
 read -p "1. Log into Linode, go to 'Linodes' and click on 'Create Linode'..."
-echo
+echo ""
 
 read -p "2. Choose a Distribution (e.g. Ubuntu LTS)..."
 echo
