@@ -193,4 +193,4 @@ read -p "14. Display Firewall status:
 sudo ufw status"
 echo
 
-echo "Done..."
+echo "Done."
