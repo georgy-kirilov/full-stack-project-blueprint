@@ -126,8 +126,7 @@ read -p "17. Open a new Linux terminal and SSH to the VM using the non-root user
 ssh $VM_NAME"
 echo
 
-echo
-echo "Install VM Dependencies"
+echo "=== Install VM Dependencies ==="
 echo
 
 read -p "1. Update the package list:
