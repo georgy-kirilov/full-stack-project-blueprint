@@ -31,6 +31,7 @@ jobs:
         ssh ${{ secrets.VM_USERNAME }}@${{ secrets.VM_IP_ADDRESS }} << 'ENDSSH'
           cd /srv/full-stack-project-blueprint
           git pull origin main
-          docker-compose -f /srv/full-stack-project-blueprint/src/backend/docker-compose.yml down
-          docker-compose -f /srv/full-stack-project-blueprint/src/backend/docker-compose.yml up -d --build
+          docker-compose -f /srv/full-stack-project-blueprint/deploy/docker-compose.yml down
+          docker-compose -f /srv/full-stack-project-blueprint/deploy/docker-compose.yml up -d --build
         ENDSSH
+
