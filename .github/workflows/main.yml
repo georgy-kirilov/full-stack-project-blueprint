@@ -16,8 +16,11 @@ jobs:
 
     - name: Add SSH Key to known_hosts
       run: |
+        mkdir -p ~/.ssh
+        touch ~/.ssh/known_hosts
+        chmod 600 ~/.ssh/known_hosts
         echo "${{ secrets.VM_IP_ADDRESS }} $(ssh-keyscan -H ${{ secrets.VM_IP_ADDRESS }})" >> ~/.ssh/known_hosts
-        
+
     - name: Setup SSH
       uses: webfactory/ssh-agent@v0.7.0
       with:
