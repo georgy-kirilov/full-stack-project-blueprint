@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+env:
+  PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+  REPO_URL: ${{ secrets.REPO_URL }} # Add this line, assuming you have set a REPO_URL in your GitHub secrets
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -29,9 +33,11 @@ jobs:
     - name: SSH and Deploy
       run: |
         ssh ${{ secrets.VM_USERNAME }}@${{ secrets.VM_IP_ADDRESS }} << 'ENDSSH'
-          cd /srv/full-stack-project-blueprint
+          if [ ! -d "/srv/${PROJECT_NAME}" ]; then
+            git clone ${REPO_URL} /srv/${PROJECT_NAME}
+          fi
+          cd /srv/${PROJECT_NAME}
           git pull origin main
-          docker-compose -f /srv/full-stack-project-blueprint/deploy/docker-compose.yml down
-          docker-compose -f /srv/full-stack-project-blueprint/deploy/docker-compose.yml up -d --build
+          docker-compose -f /srv/${PROJECT_NAME}/deploy/docker-compose.yml down
+          docker-compose -f /srv/${PROJECT_NAME}/deploy/docker-compose.yml up -d --build
         ENDSSH
-
