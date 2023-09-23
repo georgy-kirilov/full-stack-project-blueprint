@@ -21,7 +21,7 @@ jobs:
     - name: Add SSH Key to known_hosts
       run: |
         mkdir -p ~/.ssh
-        touch ~/.ssh/known_hosts
+        ssh-keyscan -H github.com >> ~/.ssh/known_hosts
         chmod 600 ~/.ssh/known_hosts
         echo "${{ secrets.VM_IP_ADDRESS }} $(ssh-keyscan -H ${{ secrets.VM_IP_ADDRESS }})" >> ~/.ssh/known_hosts
 
@@ -33,6 +33,7 @@ jobs:
     - name: SSH and Deploy
       run: |
         ssh ${{ secrets.VM_USERNAME }}@${{ secrets.VM_IP_ADDRESS }} << 'ENDSSH'
+          mkdir -p /srv/${{ env.PROJECT_NAME }}
           cd /srv/${{ env.PROJECT_NAME }}
           git clone ${{ env.REPO_URL }}
           docker-compose -f /srv/${{ env.PROJECT_NAME }}/deploy/docker-compose.yml down
