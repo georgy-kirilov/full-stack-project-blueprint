@@ -3,8 +3,8 @@ version: '3.8'
 services:
   backend:
     build:
-      context: ../src/backend/Startup
-      dockerfile: Dockerfile
+      context: ../src/backend
+      dockerfile: Startup/Dockerfile
     ports:
       - "5000:5000"
     environment:
