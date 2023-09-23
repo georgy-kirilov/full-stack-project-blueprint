@@ -14,9 +14,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Setup environment variables
-      run: echo "PROJECT_NAME=full-stack-project-blueprint" >> $GITHUB_ENV
-
     - name: Setup SSH
       uses: webfactory/ssh-agent@v0.7.0
       with:
@@ -31,11 +28,11 @@ jobs:
 
     - name: SSH and Deploy
       run: |
-        VM_PATH="/srv/${PROJECT_NAME}"
         ssh ${{ secrets.VM_USERNAME }}@${{ secrets.VM_IP_ADDRESS }} << 'ENDSSH'
+          VM_PATH="/srv/full-stack-project-blueprint"
           mkdir -p ${VM_PATH}
           cd ${VM_PATH}
-          git clone https://github.com/georgy-kirilov/full-stack-project-blueprint.git repo || (cd repo && git pull origin main)
+          git clone your-repo-url repo || (cd repo && git pull origin main)
           docker-compose -f ${VM_PATH}/deploy/docker-compose.yml down
           docker-compose -f ${VM_PATH}/deploy/docker-compose.yml up -d --build
         ENDSSH
