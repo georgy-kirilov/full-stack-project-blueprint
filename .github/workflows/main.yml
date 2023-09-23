@@ -30,9 +30,13 @@ jobs:
       run: |
         ssh ${{ secrets.VM_USERNAME }}@${{ secrets.VM_IP_ADDRESS }} << 'ENDSSH'
           VM_PATH="/srv/full-stack-project-blueprint"
-          mkdir -p ${VM_PATH}
-          cd ${VM_PATH}
-          git clone https://github.com/georgy-kirilov/full-stack-project-blueprint.git repo || (cd repo && git pull origin main)
-          docker-compose -f ${VM_PATH}/deploy/docker-compose.yml down
+          sudo mkdir -p ${VM_PATH}  # Use sudo to ensure permission
+          cd ${VM_PATH} || exit 1   # Exit if cd fails
+          if [ -d "repo" ]; then
+            cd repo && git pull origin main
+          else
+            git clone https://github.com/georgy-kirilov/full-stack-project-blueprint.git repo
+          fi
+          docker-compose -f ${VM_PATH}/deploy/docker-compose.yml down || true
           docker-compose -f ${VM_PATH}/deploy/docker-compose.yml up -d --build
         ENDSSH
