@@ -1,49 +1,47 @@
-name: Deploy to Linode VM
+name: Deploy to VM
 
 on:
   push:
     branches:
       - main
 
-env:
-  VM_IP_ADDRESS: ${{ secrets.VM_IP_ADDRESS }}
-  VM_USERNAME: ${{ secrets.VM_USERNAME }}
-  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-  PROJECT_NAME: full-stack-project-blueprint
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: dev
+
+    env:
+      VM_IP_ADDRESS: ${{ secrets.VM_IP_ADDRESS }}
+      VM_USERNAME: ${{ secrets.VM_USERNAME }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      DEPLOY_PATH: "/home/${{ secrets.VM_USERNAME }}/full-stack-project-blueprint" #${{ secrets.DEPLOY_PATH }}
+      DB_NAME: test #${{ secrets.DB_NAME }}
+      DB_USER: test #${{ secrets.DB_USER }}
+      DB_PASSWORD: test #${{ secrets.DB_PASSWORD }}
+
     steps:
-    - name: Debug SSH Connection
-      run: ssh -o StrictHostKeyChecking=no -vvv ${{ secrets.YOUR_SSH_USER }}@${{ secrets.YOUR_SSH_HOST }}
-      continue-on-error: true
-      
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Copy files to Linode
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ env.VM_IP_ADDRESS }}
-        username: ${{ env.VM_USERNAME }}
-        key: ${{ env.SSH_PRIVATE_KEY }}
-        source: "."
-        target: "/srv/${{ env.PROJECT_NAME }}"
+      - name: Deploy to VM
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ env.VM_IP_ADDRESS }}
+          username: ${{ env.VM_USERNAME }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          source: "."
+          target: ${{ env.DEPLOY_PATH }}
 
-    - name: Deploy on Linode
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ env.VM_IP_ADDRESS }}
-        username: ${{ env.VM_USERNAME }}
-        key: ${{ env.SSH_PRIVATE_KEY }}
-        script: |
-          VM_PATH="/srv/${{ env.PROJECT_NAME }}"
-          cd $VM_PATH
-          git clone https://github.com/georgy-kirilov/full-stack-project-blueprint.git repo
-          cd repo
-          git pull origin main
-          docker-compose -f $VM_PATH/deploy/docker-compose.yml build
-          docker-compose -f $VM_PATH/deploy/docker-compose.yml down
-          docker-compose -f $VM_PATH/deploy/docker-compose.yml up -d
+      - name: Build and Restart services on VM using SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.VM_IP_ADDRESS }}
+          username: ${{ env.VM_USERNAME }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ env.DEPLOY_PATH }}
+            export DB_NAME="${{ env.DB_NAME }}"
+            export DB_USER="${{ env.DB_USER }}"
+            export DB_PASSWORD="${{ env.DB_PASSWORD }}"
+            docker-compose -f docker-compose.yml build
+            docker-compose -f docker-compose.yml down
+            docker-compose -f docker-compose.yml up -d
