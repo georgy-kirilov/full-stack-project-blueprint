@@ -16,6 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     steps:
+    - name: Debug SSH Connection
+      run: ssh -o StrictHostKeyChecking=no -vvv ${{ secrets.YOUR_SSH_USER }}@${{ secrets.YOUR_SSH_HOST }}
+      continue-on-error: true
+      
     - name: Checkout repository
       uses: actions/checkout@v3
 
