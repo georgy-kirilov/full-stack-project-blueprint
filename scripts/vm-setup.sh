@@ -193,4 +193,38 @@ read -p "14. Display Firewall status:
 sudo ufw status"
 echo
 
+echo "=== Configure Nginx Reverse Proxy ==="
+echo ""
+
+read -p "1. Create a Docker network for Nginx to communicate with your containers:
+docker network create nginx-network"
+echo ""
+
+read -p "2. Pull the latest Nginx Docker image:
+docker pull nginx:latest"
+echo ""
+
+read -p "3. Create a directory to hold Nginx configuration:
+mkdir -p ~/nginx-config"
+echo ""
+
+read -p "4. Transfer the Nginx default configuration file from your local machine to the VM:
+scp ./nginx-config/default.conf $USERNAME@$VM_IP_ADDRESS:~/nginx-config/"
+echo
+
+read -p "5. Run the Nginx container:
+docker run --name nginx-proxy -d --network=nginx-network -p 80:80 -p 443:443 -v ~/nginx-config/default.conf:/etc/nginx/conf.d/default.conf nginx:latest"
+echo ""
+
+read -p "6. To add a new service to the Nginx reverse proxy, modify the ~/nginx-config/default.conf file and restart the Nginx container:
+docker restart nginx-proxy"
+echo ""
+
+read -p "7. To view the Nginx logs for debugging:
+docker logs nginx-proxy"
+echo ""
+
+echo "Nginx Reverse Proxy has been set up."
+echo "To add your app containers to this network, include 'nginx-network' under 'networks' in their docker-compose.yml files."
+
 echo "Done."
