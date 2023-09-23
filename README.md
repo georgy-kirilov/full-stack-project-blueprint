@@ -1,1 +1,1 @@
-# full-stack-project-blueprint
+# full stack project blueprint
