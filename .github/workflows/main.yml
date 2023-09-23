@@ -35,7 +35,7 @@ jobs:
         ssh ${{ secrets.VM_USERNAME }}@${{ secrets.VM_IP_ADDRESS }} << 'ENDSSH'
           mkdir -p ${VM_PATH}
           cd ${VM_PATH}
-          git clone your-repo-url repo || (cd repo && git pull origin main)
+          git clone https://github.com/georgy-kirilov/full-stack-project-blueprint.git repo || (cd repo && git pull origin main)
           docker-compose -f ${VM_PATH}/deploy/docker-compose.yml down
           docker-compose -f ${VM_PATH}/deploy/docker-compose.yml up -d --build
         ENDSSH
