@@ -193,38 +193,24 @@ read -p "14. Display Firewall status:
 sudo ufw status"
 echo
 
-echo "=== Configure Nginx Reverse Proxy ==="
+echo "=== Setting up Nginx Reverse Proxy ==="
 echo ""
 
-read -p "1. Create a Docker network for Nginx to communicate with your containers:
+read -p "1. Check if the Docker network for Nginx exists. If it doesn't, you'll need to create it manually. Run the following command to check:
+docker network ls | grep nginx-network"
+echo ""
+
+read -p "If the network does not exist, create it. Run:
 docker network create nginx-network"
 echo ""
 
-read -p "2. Pull the latest Nginx Docker image:
-docker pull nginx:latest"
+read -p "2. Transfer the global Nginx configuration files and Docker Compose file from your local machine to the VM. Run the following commands:
+scp ../nginx/global-nginx.conf $USERNAME@vm_ip:/home/$USERNAME/nginx/
+scp ../nginx/docker-compose.global-nginx.yml $USERNAME@vm_ip:/home/$USERNAME/nginx/"
 echo ""
 
-read -p "3. Create a directory to hold Nginx configuration:
-mkdir -p ~/nginx-config"
+read -p "3. If the Nginx container is not running, start it with the Docker Compose file for global Nginx. Run:
+docker-compose -f /home/$USERNAME/nginx/docker-compose.global-nginx.yml up -d"
 echo ""
-
-read -p "4. Transfer the Nginx default configuration file from your local machine to the VM:
-scp ./nginx-config/default.conf $USERNAME@$VM_IP_ADDRESS:~/nginx-config/"
-echo
-
-read -p "5. Run the Nginx container:
-docker run --name nginx-proxy -d --network=nginx-network -p 80:80 -p 443:443 -v ~/nginx-config/default.conf:/etc/nginx/conf.d/default.conf nginx:latest"
-echo ""
-
-read -p "6. To add a new service to the Nginx reverse proxy, modify the ~/nginx-config/default.conf file and restart the Nginx container:
-docker restart nginx-proxy"
-echo ""
-
-read -p "7. To view the Nginx logs for debugging:
-docker logs nginx-proxy"
-echo ""
-
-echo "Nginx Reverse Proxy has been set up."
-echo "To add your app containers to this network, include 'nginx-network' under 'networks' in their docker-compose.yml files."
 
 echo "Done."

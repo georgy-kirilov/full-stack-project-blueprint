@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  global-nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-global.conf:/etc/nginx/nginx.conf
+    networks:
+      - nginx-network
+
+networks:
+  nginx-network:
+    driver: bridge
