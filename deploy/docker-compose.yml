@@ -8,13 +8,13 @@ services:
     ports:
       - "5000:80"
     networks:
-      - mynetwork
+      - nginx-network
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
 
 networks:
-  mynetwork:
-    driver: bridge
+  nginx-network:
+    external: true
   
   #frontend:
   #  build:
