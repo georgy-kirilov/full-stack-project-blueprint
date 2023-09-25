@@ -205,8 +205,8 @@ docker network create nginx-network"
 echo ""
 
 read -p "2. Transfer the global Nginx configuration files and Docker Compose file from your local machine to the VM. Run the following commands:
-scp ../nginx/global-nginx.conf $USERNAME@vm_ip:/home/$USERNAME/nginx/
-scp ../nginx/docker-compose.global-nginx.yml $USERNAME@vm_ip:/home/$USERNAME/nginx/"
+scp ./nginx/nginx-global.conf $USERNAME@vm_ip:/home/$USERNAME/nginx/
+scp ./nginx/docker-compose.global-nginx.yml $USERNAME@vm_ip:/home/$USERNAME/nginx/"
 echo ""
 
 read -p "3. If the Nginx container is not running, start it with the Docker Compose file for global Nginx. Run:
